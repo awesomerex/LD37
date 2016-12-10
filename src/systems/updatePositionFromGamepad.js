@@ -2,6 +2,7 @@ var gamepads = require("html5-gamepad");
 
 module.exports = function(entities) {
   return function updatePositionFromGamepad(entities, elapsed) {
+    navigator.getGamepads(); // fix for chrome
     var ids = entities.find("gamepad");
     for (var i = 0; i < ids.length; i++) {
       var velocity = entities.getComponent(ids[i], "velocity");
@@ -9,28 +10,27 @@ module.exports = function(entities) {
         velocity = entities.addComponent(ids[i], "velocity");
       }
       var gamepadComponent = entities.getComponent(ids[i], "gamepad");
+      // console.log(gamepads);
       var gamepad = gamepads[gamepadComponent.index];
       if (!gamepad) {
         continue;
       }
 
-      var gx = gamepad.axis("left stick x");
-      if (gx > 0 && gx < gamepadComponent.threshold) {
-        gx = 0;
-      }
-      if (gx < 0 && gx > -gamepadComponent.threshold) {
-        gx = 0;
-      }
+      var gx = deadZone(gamepad.axis("left stick x"), gamepadComponent.threshold);
       velocity.vx = gx * gamepadComponent.speed;
 
-      var gy = gamepad.axis("left stick y");
-      if (gy > 0 && gy < gamepadComponent.threshold) {
-        gy = 0;
-      }
-      if (gy < 0 && gy > -gamepadComponent.threshold) {
-        gy = 0;
-      }
+      var gy = deadZone(gamepad.axis("left stick y"), gamepadComponent.threshold);
       velocity.vy = gy * gamepadComponent.speed;
     }
   }
+}
+
+function deadZone(val, threshold) {
+  if (val > 0 && val < threshold) {
+    return 0;
+  }
+  if (val < 0 && val > -threshold) {
+    return 0;
+  }
+  return val;
 }
