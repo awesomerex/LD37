@@ -24,10 +24,10 @@ entities.registerComponent("velocity", require("./components/velocity"));
 // Systems
 
 ecs.add(require("./systems/updatePositionFromGamepad")(entities));
+ecs.add(require("./systems/velocity")(entities));
 ecs.add(require("./systems/graphicsFromRectangle")(stage));
 ecs.add(require("./systems/graphicsPosition")(entities));
 ecs.add(require("./systems/renderScene")(renderer, stage));
-ecs.add(require("./systems/velocity")(entities));
 
 var player = entities.create();
 var position = entities.addComponent(player, "position");

@@ -1,18 +1,20 @@
 var gamepads = require("html5-gamepad");
 
 module.exports = function(entities) {
-  entities.registerSearch("updatePositionFromGamepad", ["position", "gamepad"]);
   return function updatePositionFromGamepad(entities, elapsed) {
-    var ids = entities.find("updatePositionFromGamepad");
+    var ids = entities.find("gamepad");
     for (var i = 0; i < ids.length; i++) {
-      var position = entities.getComponent(ids[i], "position");
+      var velocity = entities.getComponent(ids[i], "velocity");
+      if (!velocity) {
+        velocity = entities.addComponent(ids[i], "velocity");
+      }
       var gamepadComponent = entities.getComponent(ids[i], "gamepad");
       var gamepad = gamepads[gamepadComponent.index];
       if (!gamepad) {
         continue;
       }
-      position.x += gamepad.axis("left stick x") * gamepadComponent.speed * elapsed;
-      position.y += gamepad.axis("left stick y") * gamepadComponent.speed * elapsed;
+      velocity.vx = gamepad.axis("left stick x") * gamepadComponent.speed;
+      velocity.vy = gamepad.axis("left stick y") * gamepadComponent.speed;
     }
   }
 }
