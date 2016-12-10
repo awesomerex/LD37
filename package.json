@@ -11,10 +11,10 @@
   "dependencies": {
     "entity-component-system": "^4.0.4",
     "pixi-tween": "^0.2.0",
-    "pixi.js": "^4.2.3",
-    "webpack": "^1.14.0"
+    "pixi.js": "^4.2.3"
   },
   "devDependencies": {
+    "webpack": "^1.14.0",
     "webpack-dev-server": "^1.16.2"
   }
 }
