@@ -10,51 +10,23 @@ var renderer = PIXI.autoDetectRenderer(800, 600,{backgroundColor : 0x1099bb, vie
 // create the root of the scene graph
 var stage = new PIXI.Container();
 
-
 // Components
-function positionFactory() {
-	return {x:0,y:0};
-}
-entities.registerComponent("position", positionFactory);
 
-function rectangleFactory() {
-	var graphics = new PIXI.Graphics();
-
-	// set a fill and a line style again and draw a rectangle
-	graphics.lineStyle(2, 0x0000FF, 1);
-	graphics.beginFill(0xFF700B, 1);
-	graphics.drawRect(0, 0, 120, 120);
-	graphics.endFill();
-
-	stage.addChild(graphics);
-	return graphics;
- }
-entities.registerComponent("rectangle", rectangleFactory);
+entities.registerComponent("position", require("./components/position"));
+entities.registerComponent("graphics", require("./components/graphics"));
+entities.registerComponent("rectangle", require("./components/rectangle"));
 
 // Systems
 
-entities.registerSearch("setGraphicsPosition", ["position", "rectangle"]);
-function setGraphicsPosition(entities, elapsed){
-	var ids = entities.find("setGraphicsPosition");
-	for ( var i = 0; i < ids.length; i++){
-		var position = entities.getComponent(ids[i], "position");
-		var rectangle = entities.getComponent(ids[i], "rectangle");
-		rectangle.x = position.x;
-		rectangle.y = position.y;
-	}
-}
-ecs.add(setGraphicsPosition);
-
-function renderScene(entities, elapsed) {
-	renderer.render(stage);
-}
-ecs.add(renderScene);
+ecs.add(require("./systems/graphicsFromRectangle")(stage));
+ecs.add(require("./systems/graphicsPosition")(entities));
+ecs.add(require("./systems/renderScene")(renderer, stage));
 
 var player = entities.create();
 
 var position = entities.addComponent(player, "position");
 position.x = 200;
-entities.addComponent(player, "rectangle");
+var rectangle = entities.addComponent(player, "rectangle");
 
 
 var lastTime = -1;
