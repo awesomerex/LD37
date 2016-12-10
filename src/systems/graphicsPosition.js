@@ -5,9 +5,9 @@ module.exports = function(entities) {
     for (var i = 0; i < ids.length; i++) {
       var position = entities.getComponent(ids[i], "position");
       var graphics = entities.getComponent(ids[i], "graphics");
-      graphics.x = position.x;
-      graphics.y = position.y;
-      graphics.rotation = position.rotation;
+      graphics.drawable.x = position.x;
+      graphics.drawable.y = position.y;
+      graphics.drawable.rotation = position.rotation;
     }
   }
 }
