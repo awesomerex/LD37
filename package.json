@@ -4,10 +4,12 @@
   "description": "Ludum Dare 37 game project",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "webpack",
+    "start": "webpack-dev-server --hot --inline --content-base public --host 0.0.0.0 --port 4000",
+    "watch": "webpack --watch"
   },
   "author": "Rex Soriano",
-  "license": "ISC",
+  "license": "",
   "dependencies": {
     "entity-component-system": "^4.0.4",
     "pixi-tween": "^0.2.0",
