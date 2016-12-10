@@ -24,21 +24,7 @@ ecs.add(require("./systems/updatePositionFromGamepad")(entities));
 ecs.add(require("./systems/velocity")(entities));
 ecs.add(require("./systems/graphicsFromRectangle")(stage));
 ecs.add(require("./systems/graphicsPosition")(entities));
-ecs.add(function(entities, elapsed) {
-  var ids = entities.find("graphics");
-  for (var i = 0; i < ids.length; i++) {
-    var graphics = entities.getComponent(ids[i], "graphics");
-    var parent = entities.getComponent(ids[i], "parent");
-    if (!graphics.drawable.parent) {
-      if (parent !== undefined) {
-        var parentGraphics = entities.getComponent(parent, "graphics");
-        parentGraphics.drawable.addChild(graphics.drawable);
-      } else {
-        stage.addChild(graphics.drawable);
-      }
-    }
-  }
-});
+ecs.add(require("./systems/setParents")(stage));
 ecs.add(require("./systems/renderScene")(renderer, stage));
 
 // Prefabs
