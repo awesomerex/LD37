@@ -32,30 +32,12 @@ ecs.add(require("./systems/renderScene")(renderer, stage));
 
 // Prefabs
 var prefabs = {
-	bullet : require("./prefabs/bullet")
+  bullet : require("./prefabs/bullet"),
+  player : require("./prefabs/player")
 }
 
-
-
-var player = entities.create();
-var position = entities.addComponent(player, "position");
-var rectangle = entities.addComponent(player, "rectangle");
-var gamepad = entities.addComponent(player, "gamepad");
-var bullet = prefabs.bullet(entities, player);
-gamepad.speed = 1;
-
-var player2 = entities.create();
-var position = entities.addComponent(player2, "position");
-position.x = 200;
-var rectangle = entities.addComponent(player2, "rectangle");
-rectangle.color = 0xFF0000;
-
-var velocity = entities.addComponent(player2, "velocity");
-velocity.vx = 0.1;
-var gamepad = entities.addComponent(player2, "gamepad");
-gamepad.index = 1;
-gamepad.speed = 1;
-
+prefabs.player(entities, 0, 100, 300, 0x0000ff);
+prefabs.player(entities, 1, 500, 300, 0xff0000);
 
 
 var lastTime = -1;
