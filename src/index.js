@@ -23,11 +23,15 @@ ecs.add(require("./systems/graphicsPosition")(entities));
 ecs.add(require("./systems/renderScene")(renderer, stage));
 
 var player = entities.create();
-
 var position = entities.addComponent(player, "position");
-position.x = 200;
 var rectangle = entities.addComponent(player, "rectangle");
 
+
+var player2 = entities.create();
+var position = entities.addComponent(player2, "position");
+position.x = 200;
+var rectangle = entities.addComponent(player2, "rectangle");
+rectangle.color = 0xFF0000;
 
 var lastTime = -1;
 var render = function(time) {

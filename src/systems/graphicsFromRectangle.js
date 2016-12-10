@@ -7,7 +7,6 @@ module.exports = function(stage){
 			if(!graphics){
 				graphics = entities.addComponent(ids[i], "graphics");
 			}
-			graphics.lineStyle(2, 0x0000FF, 1);
 			graphics.beginFill(rectangle.color, 1);
 			graphics.drawRect(0, 0, rectangle.width, rectangle.height);
 			graphics.endFill();
