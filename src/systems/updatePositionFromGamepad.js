@@ -13,8 +13,24 @@ module.exports = function(entities) {
       if (!gamepad) {
         continue;
       }
-      velocity.vx = gamepad.axis("left stick x") * gamepadComponent.speed;
-      velocity.vy = gamepad.axis("left stick y") * gamepadComponent.speed;
+
+      var gx = gamepad.axis("left stick x");
+      if (gx > 0 && gx < gamepadComponent.threshold) {
+        gx = 0;
+      }
+      if (gx < 0 && gx > -gamepadComponent.threshold) {
+        gx = 0;
+      }
+      velocity.vx = gx * gamepadComponent.speed;
+
+      var gy = gamepad.axis("left stick y");
+      if (gy > 0 && gy < gamepadComponent.threshold) {
+        gy = 0;
+      }
+      if (gy < 0 && gy > -gamepadComponent.threshold) {
+        gy = 0;
+      }
+      velocity.vy = gy * gamepadComponent.speed;
     }
   }
 }
