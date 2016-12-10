@@ -10,7 +10,7 @@ module.exports = function(stage){
       console.log("make graphics");
       graphics = entities.addComponent(ids[i], "graphics");
       graphics.beginFill(rectangle.color, 1);
-      graphics.drawRect(0, 0, rectangle.width, rectangle.height);
+      graphics.drawRect(-rectangle.width / 2, -rectangle.height / 2, rectangle.width, rectangle.height);
       graphics.endFill();
       stage.addChild(graphics);
     }
