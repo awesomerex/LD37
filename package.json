@@ -1,0 +1,20 @@
+{
+  "name": "ludumdare37",
+  "version": "1.0.0",
+  "description": "Ludum Dare 37 game project",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Rex Soriano",
+  "license": "ISC",
+  "dependencies": {
+    "entity-component-system": "^4.0.4",
+    "pixi-tween": "^0.2.0",
+    "pixi.js": "^4.2.3",
+    "webpack": "^1.14.0"
+  },
+  "devDependencies": {
+    "webpack-dev-server": "^1.16.2"
+  }
+}
