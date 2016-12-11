@@ -20,15 +20,15 @@ window.dump = require("./dump");;
 
 // Components
 
-entities.registerComponent("position", require("./components/position"));
-entities.registerComponent("graphics", require("./components/graphics"));
-entities.registerComponent("rectangle", require("./components/rectangle"));
-entities.registerComponent("gamepad", require("./components/gamepad"));
-entities.registerComponent("velocity", require("./components/velocity"));
-entities.registerComponent("lifetime", require("./components/lifetime"));
-entities.registerComponent("ghosts", require("./components/ghosts"));
-entities.registerComponent("text", require("./components/text"));
-entities.registerComponent("playerReady", require("./components/playerReady"));
+entities.registerComponent("position", require("./components/position").factory, require("./components/position").reset);
+entities.registerComponent("graphics", require("./components/graphics").factory, require("./components/graphics").reset);
+entities.registerComponent("rectangle", require("./components/rectangle").factory, require("./components/rectangle").reset);
+entities.registerComponent("gamepad", require("./components/gamepad").factory, require("./components/gamepad").reset);
+entities.registerComponent("velocity", require("./components/velocity").factory, require("./components/velocity").reset);
+entities.registerComponent("lifetime", require("./components/lifetime").factory, require("./components/lifetime").reset);
+entities.registerComponent("ghosts", require("./components/ghosts").factory, require("./components/ghosts").reset);
+entities.registerComponent("text", require("./components/text").factory, require("./components/text").reset);
+entities.registerComponent("playerReady", require("./components/playerReady").factory, require("./components/playerReady").reset);
 
 
 // Systems
