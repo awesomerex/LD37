@@ -1,13 +1,3 @@
-function collides(pos1, rect1, pos2, rect2){
-  if(pos1.x + rect1.width >= pos2.x && //right side of bullet breaks left plane of player
-          pos1.x < pos2.x + rect2.width && //left side of bullet is within the)
-          pos1.y + rect1.height > pos2.y &&
-          pos1.y < pos2.y + rect2.height){
-          return true;
-        } 
-  return false;
-}
-
 module.exports = function (entities) {
 
   entities.registerSearch("movingBullets", ["bullet", "velocity"]);
@@ -53,6 +43,29 @@ module.exports = function (entities) {
       }
     }
   }
+}
+
+function collides(pos1, rect1, pos2, rect2) {
+  var halfWidth1 = rect1.width / 2;
+  var halfHeight1 = rect1.height / 2;
+
+  var left1 = pos1.x - halfWidth1;
+  var right1 = pos1.x + halfWidth1;
+  var top1 = pos1.y - halfHeight1;
+  var bottom1 = pos1.y + halfHeight1;
+
+  var halfWidth2 = rect2.width / 2;
+  var halfHeight2 = rect2.height / 2;
+
+  var left2 = pos2.x - halfWidth2;
+  var right2 = pos2.x + halfWidth2;
+  var top2 = pos2.y - halfHeight2;
+  var bottom2 = pos2.y + halfHeight2;
+
+  return right1 >= left2 &&
+    left1 < right2 &&
+    bottom1 >= top2 &&
+    top1 < bottom2;
 }
 
 function deletePlayerContainer(entities, player) {
