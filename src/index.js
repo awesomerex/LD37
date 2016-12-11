@@ -18,6 +18,21 @@ stage.className = "stage";
 window.stage = stage;
 window.dump = require("./dump");;
 
+// sounds
+
+var SoundLoader = require("./sound-loader");
+var sounds = new SoundLoader(function() {
+  sounds.play("battle", true);
+});
+sounds.loadFromManifest({
+  "battle": "battle.mp3",
+  "charge": "charge.mp3",
+  "counthi": "counthi.mp3",
+  "countlow": "countlow.mp3",
+  "die": "die.mp3",
+  "fire": "fire.mp3"
+});
+
 // Components
 
 entities.registerComponent("position", require("./components/position").factory, require("./components/position").reset);
@@ -33,9 +48,9 @@ entities.registerComponent("playerReady", require("./components/playerReady").fa
 
 // Systems
 ecs.add(require("./systems/updatePositionFromGamepad")(entities));
-ecs.add(require("./systems/collisionDetection")(entities));
-ecs.add(require("./systems/fireBullet")(entities));
-ecs.add(require("./systems/spawnPlayers")());
+ecs.add(require("./systems/collisionDetection")(entities, sounds));
+ecs.add(require("./systems/fireBullet")(entities, sounds));
+ecs.add(require("./systems/spawnPlayers")(sounds));
 ecs.add(require("./systems/velocity")(entities));
 ecs.add(require("./systems/wrapAround")());
 ecs.add(require("./systems/lifetime")());
