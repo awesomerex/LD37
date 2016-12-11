@@ -1,4 +1,8 @@
-module.exports = function(stage) {
+module.exports = function(stage, entities) {
+  entities.onRemoveComponent("parent", function(id, component, oldValue){
+     var graphics = entities.getComponent(id, "graphics");
+     graphics.drawable.setParent(stage);
+  });
   return function(entities, elapsed) {
     var ids = entities.find("graphics");
     for (var i = 0; i < ids.length; i++) {

@@ -3,7 +3,6 @@ var PIXI =require("pixi.js");
 
 module.exports = function makePlayer(entities, gamepadIndex, x, y, color) {
   var player = entities.create();
-
   var graphics = entities.addComponent(player, "graphics");
   graphics.drawable = new PIXI.Container();
   graphics.drawable.entity = player;
@@ -23,7 +22,6 @@ module.exports = function makePlayer(entities, gamepadIndex, x, y, color) {
 
 function makePlayerBody(entities, parent, color) {
   var body = entities.create();
-
   var rectangle = entities.addComponent(body, "rectangle");
   rectangle.color = color;
 

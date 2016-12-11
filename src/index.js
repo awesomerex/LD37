@@ -5,6 +5,8 @@ var PIXI = require("pixi.js");
 var ecs = new EntityComponentSystem();
 var entities = new EntityPool();
 
+window.entities = entities;
+
 var renderer = PIXI.autoDetectRenderer(800, 600,{backgroundColor : 0x1099bb, view: document.getElementById('canvas')});
 
 // create the root of the scene graph
@@ -40,10 +42,42 @@ entities.registerComponent("velocity", require("./components/velocity"));
 // Systems
 
 ecs.add(require("./systems/updatePositionFromGamepad")(entities));
+
+var gamepads = require("html5-gamepad");
+
+ecs.add(function fireBullet(entities, elapsed){
+	var ids = entities.find("fireBullet").slice();
+	for (var i = 0; i < ids.length; i++){
+
+		var player = entities.getComponent(ids[i], "parent");
+		var gamepadComponent = entities.getComponent(player, "gamepad");
+
+		var gamepad = gamepads[gamepadComponent.index];
+		if(!gamepad){
+			continue;
+		}
+		if(gamepad.button("a")){
+			var bullet = entities.getComponent(ids[i], "graphics");
+
+
+			entities.removeComponent(ids[i], "parent");
+
+			var pos = entities.getComponent(ids[i], "position");
+
+
+			pos.x = bullet.drawable.worldTransform.tx;
+			pos.y = bullet.drawable.worldTransform.ty;
+
+
+		}
+	}
+});
+entities.registerSearch("fireBullet", ["bullet", "parent"]);
+
 ecs.add(require("./systems/velocity")(entities));
 ecs.add(require("./systems/graphicsFromRectangle")(stage));
 ecs.add(require("./systems/graphicsPosition")(entities));
-ecs.add(require("./systems/setParents")(stage));
+ecs.add(require("./systems/setParents")(stage, entities));
 ecs.add(require("./systems/renderScene")(renderer, stage));
 
 // Prefabs
@@ -57,6 +91,8 @@ prefabs.player(entities, 1, 500, 300, 0xff0000);
 
 
 var lastTime = -1;
+
+
 var render = function(time) {
   if (lastTime === -1) {
     lastTime = time;
@@ -69,3 +105,4 @@ var render = function(time) {
 };
 
 window.requestAnimationFrame(render);
+

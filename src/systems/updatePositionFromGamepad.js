@@ -16,7 +16,6 @@ module.exports = function(entities) {
       }
 
       var gamepadComponent = entities.getComponent(ids[i], "gamepad");
-      // console.log(gamepads);
       var gamepad = gamepads[gamepadComponent.index];
       if (!gamepad) {
         continue;
