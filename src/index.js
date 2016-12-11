@@ -47,6 +47,15 @@ prefabs.player(entities, 0, 100, 300, 0x0000ff);
 prefabs.player(entities, 1, 500, 300, 0xff0000);
 
 
+var activator = entities.create();
+var rectangle = entities.addComponent(activator, "rectangle");
+rectangle.color = 0xffff00;
+var position = entities.addComponent(activator, "position");
+position.x = 400;
+position.y = 300;
+entities.setComponent(activator, "activators", true);
+
+
 var lastTime = -1;
 
 
