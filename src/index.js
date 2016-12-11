@@ -21,9 +21,10 @@ entities.registerComponent("rectangle", require("./components/rectangle"));
 entities.registerComponent("gamepad", require("./components/gamepad"));
 entities.registerComponent("velocity", require("./components/velocity"));
 
-// Systems
 
+// Systems
 ecs.add(require("./systems/updatePositionFromGamepad")(entities));
+ecs.add(require("./systems/collisionDetection")(entities));
 ecs.add(require("./systems/fireBullet")(entities));
 ecs.add(require("./systems/velocity")(entities));
 ecs.add(require("./systems/graphicsFromRectangle")(stage));
