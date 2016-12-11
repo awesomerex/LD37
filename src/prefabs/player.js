@@ -1,7 +1,7 @@
 var bullet = require("./bullet");
 var PIXI =require("pixi.js");
 
-module.exports = function makePlayerContainer(entities, gamepadIndex, x, y, color) {
+module.exports = function makePlayerContainer(entities, gamepadIndex, x, y, color, rotation) {
   var ghostContainer = entities.create();
 
   var graphics = entities.addComponent(ghostContainer, "graphics");
@@ -20,14 +20,14 @@ module.exports = function makePlayerContainer(entities, gamepadIndex, x, y, colo
   var screenHeight = 600;
   for (var y = -screenHeight; y <= screenHeight; y += screenHeight) {
     for (var x = -screenWidth; x <= screenWidth; x += screenWidth) {
-      ghosts.push(makePlayer(entities, ghostContainer, x, y, color))
+      ghosts.push(makePlayer(entities, ghostContainer, x, y, color, rotation))
     }
   }
 
   return ghostContainer;
 };
 
-function makePlayer(entities, parent, x, y, color) {
+function makePlayer(entities, parent, x, y, color, rotation) {
   var player = entities.create();
   entities.setComponent(player, "player", true);
   entities.setComponent(player, "parent", parent);
@@ -39,6 +39,7 @@ function makePlayer(entities, parent, x, y, color) {
   var position = entities.addComponent(player, "position");
   position.x = x;
   position.y = y;
+  position.rotation = rotation;
 
   entities.setComponent(player, "body", makePlayerBody(entities, player, color));
   bullet(entities, player);
