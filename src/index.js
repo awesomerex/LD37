@@ -24,44 +24,7 @@ entities.registerComponent("velocity", require("./components/velocity"));
 // Systems
 
 ecs.add(require("./systems/updatePositionFromGamepad")(entities));
-
-var gamepads = require("html5-gamepad");
-
-ecs.add(function fireBullet(entities, elapsed){
-	var ids = entities.find("fireBullet").slice();
-	for (var i = 0; i < ids.length; i++){
-
-		var player = entities.getComponent(ids[i], "parent");
-		var gamepadComponent = entities.getComponent(player, "gamepad");
-
-		var gamepad = gamepads[gamepadComponent.index];
-		if(!gamepad){
-			continue;
-		}
-		if(gamepad.button("a")){
-			var bullet = entities.getComponent(ids[i], "graphics");
-
-			console.log(bullet.drawable.worldTransform, bullet.drawable.parent);
-			var rotation = bullet.drawable.parent.rotation;
-
-			entities.removeComponent(ids[i], "parent");
-
-			var pos = entities.getComponent(ids[i], "position");
-
-
-			pos.x = bullet.drawable.worldTransform.tx;
-			pos.y = bullet.drawable.worldTransform.ty;
-			pos.rotation = rotation;
-
-			var velocity = entities.addComponent(ids[i], "velocity");
-			var speed = 1;
-			velocity.vx = speed * Math.cos(rotation)
-			velocity.vy = speed * Math.sin(rotation)
-		}
-	}
-});
-entities.registerSearch("fireBullet", ["bullet", "parent"]);
-
+ecs.add(require("./systems/fireBullet")(entities));
 ecs.add(require("./systems/velocity")(entities));
 ecs.add(require("./systems/graphicsFromRectangle")(stage));
 ecs.add(require("./systems/graphicsPosition")(entities));
