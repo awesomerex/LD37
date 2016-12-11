@@ -59,6 +59,8 @@ ecs.add(function fireBullet(entities, elapsed){
 		if(gamepad.button("a")){
 			var bullet = entities.getComponent(ids[i], "graphics");
 
+			console.log(bullet.drawable.worldTransform, bullet.drawable.parent);
+			var rotation = bullet.drawable.parent.rotation;
 
 			entities.removeComponent(ids[i], "parent");
 
@@ -67,8 +69,12 @@ ecs.add(function fireBullet(entities, elapsed){
 
 			pos.x = bullet.drawable.worldTransform.tx;
 			pos.y = bullet.drawable.worldTransform.ty;
+			pos.rotation = rotation;
 
-
+			var velocity = entities.addComponent(ids[i], "velocity");
+			var speed = 1;
+			velocity.vx = speed * Math.cos(rotation)
+			velocity.vy = speed * Math.sin(rotation)
 		}
 	}
 });
