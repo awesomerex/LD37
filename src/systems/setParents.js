@@ -14,7 +14,11 @@ module.exports = function(stage, entities) {
       if (!graphics.drawable.parent) {
         if (parent !== undefined) {
           var parentGraphics = entities.getComponent(parent, "graphics");
-          parentGraphics.drawable.addChild(graphics.drawable);
+          if (parentGraphics) {
+            parentGraphics.drawable.addChild(graphics.drawable);
+          } else {
+            stage.addChild(graphics.drawable);
+          }
         } else {
           stage.addChild(graphics.drawable);
         }

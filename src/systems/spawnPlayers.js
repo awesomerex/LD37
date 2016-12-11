@@ -20,6 +20,12 @@ module.exports = function() {
           player(entities, playerReady.gamepad, playerReady.x, playerReady.y, playerReady.color, playerReady.rotation, playerReady.name);
           entities.destroy(ids[i]);
 
+          if (entities.find("ghosts").length === 1) {
+            var ids = entities.find("text").slice();
+            for (var i = 0; i < ids.length; i++) {
+              entities.destroy(ids[i]);
+            }
+          }
           if (entities.find("ghosts").length === 2) {
             buildTimer(entities, 5, function() {
               console.log("done");

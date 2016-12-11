@@ -30,7 +30,7 @@ module.exports = function(entities) {
       updateRotation(entities, ids[i], gamepad, gamepadComponent.threshold);
     }
 
-    var ids = entities.find("gamepadIndex");
+    var ids = entities.find("gamepadIndex").slice();
     for (var i = 0; i < ids.length; i++) {
       var gamepadIndex = entities.getComponent(ids[i], "gamepadIndex");
       var gamepad = gamepads[gamepadIndex];
