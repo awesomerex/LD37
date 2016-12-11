@@ -1,4 +1,4 @@
-var PIXI =require("pixi.js");
+var PIXI = require("pixi.js");
 
 module.exports = function() {
   return function setGraphicsFromRectangle(entities, elapsed) {

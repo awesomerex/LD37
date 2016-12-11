@@ -26,6 +26,7 @@ entities.registerComponent("gamepad", require("./components/gamepad"));
 entities.registerComponent("velocity", require("./components/velocity"));
 entities.registerComponent("lifetime", require("./components/lifetime"));
 entities.registerComponent("ghosts", require("./components/ghosts"));
+entities.registerComponent("text", require("./components/text"));
 
 
 // Systems
@@ -35,7 +36,8 @@ ecs.add(require("./systems/fireBullet")(entities));
 ecs.add(require("./systems/velocity")(entities));
 ecs.add(require("./systems/wrapAround")());
 ecs.add(require("./systems/lifetime")());
-ecs.add(require("./systems/graphicsFromRectangle")(stage));
+ecs.add(require("./systems/graphicsFromRectangle")());
+ecs.add(require("./systems/graphicsFromText")());
 ecs.add(require("./systems/graphicsPosition")(entities));
 ecs.add(require("./systems/setParents")(stage, entities));
 ecs.add(require("./systems/renderScene")(renderer, stage));
@@ -43,7 +45,8 @@ ecs.add(require("./systems/renderScene")(renderer, stage));
 // Prefabs
 var prefabs = {
   bullet : require("./prefabs/bullet"),
-  player : require("./prefabs/player")
+  player : require("./prefabs/player"),
+  text : require("./prefabs/text")
 }
 
 prefabs.player(entities, 0, 100, 300, 0x00AAFF, 0, "Blue");
@@ -51,6 +54,7 @@ prefabs.player(entities, 1, 700, 300, 0xFF00AA, Math.PI, "Red");
 prefabs.player(entities, 2, 400, 100, 0xAAFF00, Math.PI / 2, "Green");
 prefabs.player(entities, 3, 400, 500, 0xAA00FF, Math.PI * 3 / 2, "Purple");
 
+prefabs.text(entities, "sweet", 400, 300, 0xff0000);
 
 var activator = entities.create();
 var rectangle = entities.addComponent(activator, "rectangle");
