@@ -28,12 +28,9 @@ module.exports = function (entities) {
             y: graphics.drawable.worldTransform.ty
           };
           var body = entities.getComponent(players[x], "body");
-          console.log(body);
           var pRect = entities.getComponent(body, "rectangle");
-          // console.log('detecting', pRect);
 
           if (collides(bPos, bRect, pPos, pRect)) {
-            console.log("collision player", players[x], "bullet", bullets[i]);
             deletePlayerContainer(entities, players[x]);
           } 
         }
@@ -45,11 +42,9 @@ module.exports = function (entities) {
             x: graphics.drawable.worldTransform.tx,
             y: graphics.drawable.worldTransform.ty
           };
-          // var aPos = entities.getComponent(activators[x], "position");
           var aRect = entities.getComponent(activators[x], "rectangle");
 
           if (collides(bPos, bRect, aPos, aRect)) {
-            console.log("collision activators", activators[x], "bullet", bullets[i]);
             entities.setComponent(bullets[i], "active", true);
           } 
         }
@@ -64,6 +59,7 @@ function deletePlayerContainer(entities, player) {
   for (var i = 0; i < ghosts.length; i++) {
     deletePlayer(entities, ghosts[i]);
   }
+  entities.destroy(parent);
 }
 
 function deletePlayer(entities, player) {
@@ -74,9 +70,8 @@ function deletePlayer(entities, player) {
   for (var i = 0; i < bullets.length; i++) {
     var parent = entities.getComponent(bullets[i], "parent");
     if (parent === player) {
-      console.log("deleting", bullets[i]);
       entities.destroy(bullets[i]);
-      return;
+      break;
     }
   }
 

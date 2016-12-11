@@ -5,7 +5,9 @@ module.exports = function(entities) {
   entities.registerSearch("fireBullet", ["bullet", "parent"]);
   function spawnBullet(entity) {
     var player = entities.getComponent(entity, "owner");
-    bullet(entities, player);
+    if (entities.entities[player]) { // FIXME: no way to check if entity exists
+      bullet(entities, player);
+    }
   }
   return function fireBullet(entities, elapsed) {
     var ids = entities.find("fireBullet").slice();
