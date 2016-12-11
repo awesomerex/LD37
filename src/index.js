@@ -20,9 +20,20 @@ entities.registerComponent("graphics", require("./components/graphics"));
 entities.registerComponent("rectangle", require("./components/rectangle"));
 entities.registerComponent("gamepad", require("./components/gamepad"));
 entities.registerComponent("velocity", require("./components/velocity"));
+entities.registerComponent("lifetime", require("./components/lifetime"));
 
 
 // Systems
+ecs.add(function(entities, elapsed) {
+  var ids = entities.find("lifetime").slice();
+  for (var i = 0; i < ids.length; i++) {
+    var lifetime = entities.getComponent(ids[i], "lifetime");
+    lifetime.time -= elapsed;
+    if (lifetime.time <= 0) {
+      entities.destroy(ids[i]);
+    }
+  }
+});
 ecs.add(require("./systems/updatePositionFromGamepad")(entities));
 ecs.add(require("./systems/collisionDetection")(entities));
 ecs.add(require("./systems/fireBullet")(entities));

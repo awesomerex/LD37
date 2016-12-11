@@ -1,5 +1,8 @@
 module.exports = function(stage, entities) {
-  entities.onRemoveComponent("parent", function(id, component, oldValue){
+  entities.onRemoveComponent("graphics", function(id, component, oldValue) {
+     oldValue.drawable.destroy();
+  });
+  entities.onRemoveComponent("parent", function(id, component, oldValue) {
      var graphics = entities.getComponent(id, "graphics");
      graphics.drawable.setParent(stage);
   });

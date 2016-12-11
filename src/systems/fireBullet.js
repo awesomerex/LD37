@@ -29,6 +29,8 @@ module.exports = function(entities) {
         var speed = 1;
         velocity.vx = speed * Math.cos(rotation)
         velocity.vy = speed * Math.sin(rotation)
+
+        var lifetime = entities.addComponent(ids[i], "lifetime");
       }
     }
   }
