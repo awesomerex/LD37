@@ -5,6 +5,7 @@ module.exports = function makePlayerContainer(entities, gamepadIndex, x, y, colo
   var ghostContainer = entities.create();
   entities.setComponent(ghostContainer, "name", name);
   entities.setComponent(ghostContainer, "color", color);
+  entities.setComponent(ghostContainer, "gamepadIndex", gamepadIndex);
 
   var graphics = entities.addComponent(ghostContainer, "graphics");
   graphics.drawable = new PIXI.Container();
@@ -13,9 +14,6 @@ module.exports = function makePlayerContainer(entities, gamepadIndex, x, y, colo
   var position = entities.addComponent(ghostContainer, "position");
   position.x = x;
   position.y = y;
-
-  var gamepad = entities.addComponent(ghostContainer, "gamepad");
-  gamepad.index = gamepadIndex;
 
   var ghosts = entities.addComponent(ghostContainer, "ghosts", ghosts);
   var screenWidth = 800;

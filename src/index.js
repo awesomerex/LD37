@@ -27,12 +27,14 @@ entities.registerComponent("velocity", require("./components/velocity"));
 entities.registerComponent("lifetime", require("./components/lifetime"));
 entities.registerComponent("ghosts", require("./components/ghosts"));
 entities.registerComponent("text", require("./components/text"));
+entities.registerComponent("playerReady", require("./components/playerReady"));
 
 
 // Systems
 ecs.add(require("./systems/updatePositionFromGamepad")(entities));
 ecs.add(require("./systems/collisionDetection")(entities));
 ecs.add(require("./systems/fireBullet")(entities));
+ecs.add(require("./systems/spawnPlayers")());
 ecs.add(require("./systems/velocity")(entities));
 ecs.add(require("./systems/wrapAround")());
 ecs.add(require("./systems/lifetime")());
@@ -46,13 +48,14 @@ ecs.add(require("./systems/renderScene")(renderer, stage));
 var prefabs = {
   bullet : require("./prefabs/bullet"),
   player : require("./prefabs/player"),
+  playerReady : require("./prefabs/playerReady"),
   text : require("./prefabs/text")
 }
 
-prefabs.player(entities, 0, 100, 300, 0x00AAFF, 0, "Blue");
-prefabs.player(entities, 1, 700, 300, 0xFF00AA, Math.PI, "Red");
-prefabs.player(entities, 2, 400, 100, 0xAAFF00, Math.PI / 2, "Green");
-prefabs.player(entities, 3, 400, 500, 0xAA00FF, Math.PI * 3 / 2, "Purple");
+prefabs.playerReady(entities, 0, 100, 300, 0x00AAFF, 0, "Blue");
+prefabs.playerReady(entities, 1, 700, 300, 0xFF00AA, Math.PI, "Red");
+prefabs.playerReady(entities, 2, 400, 100, 0xAAFF00, Math.PI / 2, "Green");
+prefabs.playerReady(entities, 3, 400, 500, 0xAA00FF, Math.PI * 3 / 2, "Purple");
 
 var activator = entities.create();
 var rectangle = entities.addComponent(activator, "rectangle");

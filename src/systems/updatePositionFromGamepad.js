@@ -27,13 +27,28 @@ module.exports = function(entities) {
       var gy = deadZone(gamepad.axis("left stick y"), gamepadComponent.threshold);
       velocity.vy = gy * gamepadComponent.speed;
 
-      var hx = deadZone(gamepad.axis("right stick x"), gamepadComponent.threshold);
-      var hy = deadZone(gamepad.axis("right stick y"), gamepadComponent.threshold);
-      if (hx !== 0 || hy !== 0) {
-        var rotation = Math.atan2(gamepad.axis("right stick y"), gamepad.axis("right stick x"));
-        updateGhosts(entities, entities.getComponent(ids[i], "ghosts"), rotation);
-      }
+      updateRotation(entities, ids[i], gamepad, gamepadComponent.threshold);
     }
+
+    var ids = entities.find("gamepadIndex");
+    for (var i = 0; i < ids.length; i++) {
+      var gamepadIndex = entities.getComponent(ids[i], "gamepadIndex");
+      var gamepad = gamepads[gamepadIndex];
+      if (!gamepad) {
+        continue;
+      }
+      updateRotation(entities, ids[i], gamepad, 0.3);
+    }
+  }
+}
+
+function updateRotation(entities, player, gamepad, threshold) {
+  var hx = deadZone(gamepad.axis("right stick x"), threshold);
+  var hy = deadZone(gamepad.axis("right stick y"), threshold);
+  if (hx !== 0 || hy !== 0) {
+    var rotation = Math.atan2(gamepad.axis("right stick y"), gamepad.axis("right stick x"));
+    var ghosts = entities.getComponent(player, "ghosts");
+    updateGhosts(entities, ghosts, rotation);
   }
 }
 
