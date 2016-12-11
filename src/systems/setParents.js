@@ -12,7 +12,7 @@ module.exports = function(stage, entities) {
       var graphics = entities.getComponent(ids[i], "graphics");
       var parent = entities.getComponent(ids[i], "parent");
       if (!graphics.drawable.parent) {
-        if (parent !== undefined) {
+        if (parent !== undefined && entities.entities[parent]) {
           var parentGraphics = entities.getComponent(parent, "graphics");
           if (parentGraphics) {
             parentGraphics.drawable.addChild(graphics.drawable);
