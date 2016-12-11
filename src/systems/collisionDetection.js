@@ -29,15 +29,15 @@ module.exports = function(entities, sounds) {
             sounds.play("die");
             deletePlayer(entities, players[x]);
 
-            var ids = entities.find("bullet")
-            while (ids.length > 0) {
-              entities.destroy(ids[0]);
-            }
             var playersLeft = entities.find("name");
             if (playersLeft.length === 1) {
               var winnerName = entities.getComponent(playersLeft[0], "name");
               var winnerColor = entities.getComponent(playersLeft[0], "color");
 
+              var ids = entities.find("bullet")
+              while (ids.length > 0) {
+                entities.destroy(ids[0]);
+              }
               // var ids = Object.keys(entities.entities);
               // for (var i = 0; i < ids.length; i++) {
               //   entities.destroy(ids[i]);
