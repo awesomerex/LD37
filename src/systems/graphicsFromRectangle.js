@@ -14,7 +14,7 @@ module.exports = function() {
       var g = graphics.drawable = new PIXI.Graphics();
       g.entity = ids[i];
       g.beginFill(rectangle.color, 1);
-      g.drawRect(-rectangle.width / 2, -rectangle.height / 2, rectangle.width, rectangle.height);
+      g.drawRoundedRect(-rectangle.width / 2, -rectangle.height / 2, rectangle.width, rectangle.height, rectangle.radius || 0);
       g.endFill();
     }
   }

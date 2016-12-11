@@ -11,7 +11,7 @@ module.exports = function makeBullet(entities, parent) {
   var rectangle = entities.addComponent(id, "rectangle");
   rectangle.width = 20;
   rectangle.height = 20;
-  rectangle.color = 0x00FF00;
+  rectangle.color = 0xF6F7BD;
 
   return id;
 }

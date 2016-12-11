@@ -46,6 +46,8 @@ module.exports = function (entities) {
 
           if (collides(bPos, bRect, aPos, aRect)) {
             entities.setComponent(bullets[i], "active", true);
+            bRect.color = 0xBA3C3D;
+            entities.removeComponent(bullets[i], "graphics");
           } 
         }
       }

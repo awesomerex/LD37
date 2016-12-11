@@ -6,7 +6,10 @@ var ecs = new EntityComponentSystem();
 var entities = new EntityPool();
 window.entities = entities;
 
-var renderer = PIXI.autoDetectRenderer(800, 600,{backgroundColor : 0x1099bb, view: document.getElementById('canvas')});
+var renderer = PIXI.autoDetectRenderer(800, 600, {
+  backgroundColor: 0xc3c5d9,
+  view: document.getElementById('canvas')
+});
 window.renderer = renderer;
 
 // create the root of the scene graph
@@ -43,13 +46,15 @@ var prefabs = {
   player : require("./prefabs/player")
 }
 
-prefabs.player(entities, 0, 100, 300, 0x0000ff);
-prefabs.player(entities, 1, 500, 300, 0xff0000);
+prefabs.player(entities, 0, 100, 300, 0x00AAFF);
+prefabs.player(entities, 1, 700, 300, 0xFF00AA);
+prefabs.player(entities, 2, 400, 100, 0xAAFF00);
+prefabs.player(entities, 3, 400, 500, 0xAA00FF);
 
 
 var activator = entities.create();
 var rectangle = entities.addComponent(activator, "rectangle");
-rectangle.color = 0xffff00;
+rectangle.color = 0xF8A13F;
 var position = entities.addComponent(activator, "position");
 position.x = 400;
 position.y = 300;
