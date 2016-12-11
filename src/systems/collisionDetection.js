@@ -22,6 +22,11 @@ module.exports = function (entities) {
 
           if (collides(bPos, bRect, pPos, pRect)) {
             deletePlayerContainer(entities, players[x]);
+
+            var playersLeft = entities.find("name");
+            if (playersLeft.length === 1) {
+              console.log(entities.getComponent(playersLeft[0], "name"), "wins!");
+            }
           } 
         }
       } else {

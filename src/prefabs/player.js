@@ -1,8 +1,9 @@
 var bullet = require("./bullet");
 var PIXI =require("pixi.js");
 
-module.exports = function makePlayerContainer(entities, gamepadIndex, x, y, color, rotation) {
+module.exports = function makePlayerContainer(entities, gamepadIndex, x, y, color, rotation, name) {
   var ghostContainer = entities.create();
+  entities.setComponent(ghostContainer, "name", name);
 
   var graphics = entities.addComponent(ghostContainer, "graphics");
   graphics.drawable = new PIXI.Container();
