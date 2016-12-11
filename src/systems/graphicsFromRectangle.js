@@ -3,11 +3,11 @@ var PIXI =require("pixi.js");
 module.exports = function() {
   return function setGraphicsFromRectangle(entities, elapsed) {
     var ids = entities.find("rectangle");
-    for ( var i = 0; i < ids.length; i++){
+    for (var i = 0; i < ids.length; i++) {
       var graphics = entities.getComponent(ids[i], "graphics");
       var rectangle = entities.getComponent(ids[i], "rectangle");
       if (graphics) {
-        return;
+        continue;
       }
       console.log("make graphics");
       graphics = entities.addComponent(ids[i], "graphics");
