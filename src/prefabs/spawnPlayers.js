@@ -4,7 +4,6 @@ var playerReady = require("./playerReady");
 module.exports = function(entities) {
   var ids = entities.find("player")
   while (ids.length > 0) {
-    console.log(ids, entities);
     deletePlayer(entities, ids[0]);
   }
 

@@ -13,6 +13,7 @@ module.exports = function (entities) {
 
       var active = entities.getComponent(bullets[i], "active");
       if (active) {
+
         //loop through players looking for collisions.
         var players = entities.find("player");
         for (var x = 0; x < players.length; x++) {
@@ -61,6 +62,11 @@ module.exports = function (entities) {
             entities.setComponent(bullets[i], "active", true);
             bRect.color = 0xBA3C3D;
             entities.removeComponent(bullets[i], "graphics");
+
+            var spawner = entities.addComponent(bullets[i], "particleSpawner");
+            spawner.vx = 0;
+            spawner.vy = 0;
+            spawner.number = 1;
           } 
         }
       }

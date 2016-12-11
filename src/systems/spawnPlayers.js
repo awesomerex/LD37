@@ -28,7 +28,6 @@ module.exports = function() {
           }
           if (entities.find("ghosts").length === 2) {
             buildTimer(entities, 5, function() {
-              console.log("done");
               addGamepads(entities);
               var ids = entities.find("playerReady").slice();
               for (var i = 0; i < ids.length; i++) {
