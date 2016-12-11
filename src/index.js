@@ -28,19 +28,7 @@ ecs.add(require("./systems/updatePositionFromGamepad")(entities));
 ecs.add(require("./systems/collisionDetection")(entities));
 ecs.add(require("./systems/fireBullet")(entities));
 ecs.add(require("./systems/velocity")(entities));
-ecs.add(function(entities, elapsed) {
-  var ids = entities.find("lifetime").slice();
-  for (var i = 0; i < ids.length; i++) {
-    var lifetime = entities.getComponent(ids[i], "lifetime");
-    lifetime.time -= elapsed;
-    if (lifetime.time <= 0) {
-      if (lifetime.onExpire) {
-        lifetime.onExpire(ids[i]);
-      }
-      entities.destroy(ids[i]);
-    }
-  }
-});
+ecs.add(require("./systems/lifetime")());
 ecs.add(require("./systems/graphicsFromRectangle")(stage));
 ecs.add(require("./systems/graphicsPosition")(entities));
 ecs.add(require("./systems/setParents")(stage, entities));
