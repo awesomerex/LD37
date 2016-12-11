@@ -9,7 +9,7 @@ module.exports = function() {
       if (graphics) {
         continue;
       }
-      console.log("make graphics");
+      console.log("make rectangle");
       graphics = entities.addComponent(ids[i], "graphics");
       var g = graphics.drawable = new PIXI.Graphics();
       g.entity = ids[i];
