@@ -1,3 +1,5 @@
+var text = require("../prefabs/text");
+
 module.exports = function (entities) {
 
   entities.registerSearch("movingBullets", ["bullet", "velocity"]);
@@ -25,7 +27,7 @@ module.exports = function (entities) {
 
             var playersLeft = entities.find("name");
             if (playersLeft.length === 1) {
-              console.log(entities.getComponent(playersLeft[0], "name"), "wins!");
+              var t = text(entities, entities.getComponent(playersLeft[0], "name") + " wins!", 400, 300, 100, entities.getComponent(playersLeft[0], "color"));
             }
           } 
         }

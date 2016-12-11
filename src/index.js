@@ -54,8 +54,6 @@ prefabs.player(entities, 1, 700, 300, 0xFF00AA, Math.PI, "Red");
 prefabs.player(entities, 2, 400, 100, 0xAAFF00, Math.PI / 2, "Green");
 prefabs.player(entities, 3, 400, 500, 0xAA00FF, Math.PI * 3 / 2, "Purple");
 
-prefabs.text(entities, "sweet", 400, 300, 0xff0000);
-
 var activator = entities.create();
 var rectangle = entities.addComponent(activator, "rectangle");
 rectangle.color = 0xF8A13F;
