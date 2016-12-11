@@ -10,6 +10,7 @@ module.exports = function makePlayerContainer(entities, gamepadIndex, x, y, colo
   var graphics = entities.addComponent(ghostContainer, "graphics");
   graphics.drawable = new PIXI.Container();
   graphics.drawable.entity = ghostContainer;
+  graphics.drawable.className = "wraparound player container";
 
   var position = entities.addComponent(ghostContainer, "position");
   position.x = x;
@@ -35,6 +36,7 @@ function makePlayer(entities, parent, x, y, color, rotation) {
   var graphics = entities.addComponent(player, "graphics");
   graphics.drawable = new PIXI.Container();
   graphics.drawable.entity = player;
+  graphics.drawable.className = "single player container";
 
   var position = entities.addComponent(player, "position");
   position.x = x;

@@ -18,6 +18,7 @@ module.exports = function() {
           fontSize: text.size
         }
       );
+      g.className = "text(" + text.text + ")";
       g.entity = ids[i];
       g.anchor.set(0.5, 0.5);
     }

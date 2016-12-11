@@ -14,6 +14,7 @@ window.renderer = renderer;
 
 // create the root of the scene graph
 var stage = new PIXI.Container();
+stage.className = "stage";
 window.stage = stage;
 window.dump = require("./dump");;
 
