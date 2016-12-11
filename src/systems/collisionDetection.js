@@ -2,7 +2,7 @@ var deletePlayer = require("../deletePlayer");
 var spawnPlayers = require("../prefabs/spawnPlayers");
 var text = require("../prefabs/text");
 
-module.exports = function (entities) {
+module.exports = function(entities, sounds) {
 
   entities.registerSearch("movingBullets", ["bullet", "velocity"]);
   return function collisionDetection(entities){
@@ -26,6 +26,7 @@ module.exports = function (entities) {
           var pRect = entities.getComponent(body, "rectangle");
 
           if (collides(bPos, bRect, pPos, pRect)) {
+            sounds.play("die");
             deletePlayer(entities, players[x]);
 
             var ids = entities.find("bullet")
@@ -59,6 +60,7 @@ module.exports = function (entities) {
           var aRect = entities.getComponent(activators[x], "rectangle");
 
           if (collides(bPos, bRect, aPos, aRect)) {
+            sounds.play("charge");
             entities.setComponent(bullets[i], "active", true);
             bRect.color = 0xBA3C3D;
             entities.removeComponent(bullets[i], "graphics");

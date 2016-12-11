@@ -2,7 +2,7 @@ var bullet = require("../prefabs/bullet");
 var isShooting = require("../isShooting");
 var gamepads = require("html5-gamepad");
 
-module.exports = function(entities) {
+module.exports = function(entities, sounds) {
   entities.registerSearch("fireBullet", ["bullet", "parent"]);
   function spawnBullet(entity) {
     var player = entities.getComponent(entity, "owner");
@@ -29,6 +29,8 @@ module.exports = function(entities) {
         continue;
       }
       if (isShooting(gamepad)) {
+        sounds.play("fire");
+
         var bullet = entities.getComponent(ids[i], "graphics");
 
         var rotation = bullet.drawable.parent.rotation;
