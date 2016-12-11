@@ -8,7 +8,7 @@ module.exports = {
   },
   reset: function(gamepad) {
     gamepad.index = 0;
-    gamepad.speed = 0;
+    gamepad.speed = 1;
     gamepad.threshold = 0.3;
   }
 }
