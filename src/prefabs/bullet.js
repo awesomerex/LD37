@@ -12,6 +12,7 @@ module.exports = function makeBullet(entities, parent) {
   rectangle.width = 20;
   rectangle.height = 20;
   rectangle.color = 0xF6F7BD;
+  rectangle.radius = 10;
 
   return id;
 }
