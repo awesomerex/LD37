@@ -12,7 +12,8 @@ module.exports = function(entities) {
     for (var i = 0; i < ids.length; i++) {
 
       var player = entities.getComponent(ids[i], "parent");
-      var gamepadComponent = entities.getComponent(player, "gamepad");
+      var ghostContainer = entities.getComponent(player, "parent");
+      var gamepadComponent = entities.getComponent(ghostContainer, "gamepad");
 
       var gamepad = gamepads[gamepadComponent.index];
       if (!gamepad) {

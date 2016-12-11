@@ -10,6 +10,5 @@ module.exports = function(entities) {
       graphics.drawable.y = position.y;
       graphics.drawable.rotation = position.rotation;
     }
-
   }
 }

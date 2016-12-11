@@ -30,9 +30,17 @@ module.exports = function(entities) {
       var hx = deadZone(gamepad.axis("right stick x"), gamepadComponent.threshold);
       var hy = deadZone(gamepad.axis("right stick y"), gamepadComponent.threshold);
       if (hx !== 0 || hy !== 0) {
-        position.rotation = Math.atan2(gamepad.axis("right stick y"), gamepad.axis("right stick x"));
+        var rotation = Math.atan2(gamepad.axis("right stick y"), gamepad.axis("right stick x"));
+        updateGhosts(entities, entities.getComponent(ids[i], "ghosts"), rotation);
       }
     }
+  }
+}
+
+function updateGhosts(entities, ghosts, rotation) {
+  for (var i = 0; i < ghosts.length; i++) {
+    var pos = entities.getComponent(ghosts[i], "position");
+    pos.rotation = rotation;
   }
 }
 

@@ -7,6 +7,7 @@ var entities = new EntityPool();
 window.entities = entities;
 
 var renderer = PIXI.autoDetectRenderer(800, 600,{backgroundColor : 0x1099bb, view: document.getElementById('canvas')});
+window.renderer = renderer;
 
 // create the root of the scene graph
 var stage = new PIXI.Container();
@@ -21,6 +22,7 @@ entities.registerComponent("rectangle", require("./components/rectangle"));
 entities.registerComponent("gamepad", require("./components/gamepad"));
 entities.registerComponent("velocity", require("./components/velocity"));
 entities.registerComponent("lifetime", require("./components/lifetime"));
+entities.registerComponent("ghosts", require("./components/ghosts"));
 
 
 // Systems
@@ -28,6 +30,7 @@ ecs.add(require("./systems/updatePositionFromGamepad")(entities));
 ecs.add(require("./systems/collisionDetection")(entities));
 ecs.add(require("./systems/fireBullet")(entities));
 ecs.add(require("./systems/velocity")(entities));
+ecs.add(require("./systems/wrapAround")());
 ecs.add(require("./systems/lifetime")());
 ecs.add(require("./systems/graphicsFromRectangle")(stage));
 ecs.add(require("./systems/graphicsPosition")(entities));
