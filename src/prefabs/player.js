@@ -6,6 +6,7 @@ module.exports = function makePlayer(entities, gamepadIndex, x, y, color) {
 
   var graphics = entities.addComponent(player, "graphics");
   graphics.drawable = new PIXI.Container();
+  graphics.drawable.entity = player;
 
   var position = entities.addComponent(player, "position");
   position.x = x;
