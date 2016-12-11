@@ -1,3 +1,5 @@
+var deletePlayer = require("../deletePlayer");
+var spawnPlayers = require("../prefabs/spawnPlayers");
 var text = require("../prefabs/text");
 
 module.exports = function (entities) {
@@ -23,13 +25,27 @@ module.exports = function (entities) {
           var pRect = entities.getComponent(body, "rectangle");
 
           if (collides(bPos, bRect, pPos, pRect)) {
-            deletePlayerContainer(entities, players[x]);
+            deletePlayer(entities, players[x]);
 
+            var ids = entities.find("bullet")
+            while (ids.length > 0) {
+              entities.destroy(ids[0]);
+            }
             var playersLeft = entities.find("name");
             if (playersLeft.length === 1) {
-              var t = text(entities, entities.getComponent(playersLeft[0], "name") + " wins!", 400, 300, 100, entities.getComponent(playersLeft[0], "color"));
+              var winnerName = entities.getComponent(playersLeft[0], "name");
+              var winnerColor = entities.getComponent(playersLeft[0], "color");
+
+              // var ids = Object.keys(entities.entities);
+              // for (var i = 0; i < ids.length; i++) {
+              //   entities.destroy(ids[i]);
+              // }
+
+              var t = text(entities, winnerName + " wins!", 400, 300, 100, winnerColor);
+              spawnPlayers(entities);
+              return;
             }
-          } 
+          }
         }
       } else {
         var activators = entities.find("activators");
@@ -75,27 +91,3 @@ function collides(pos1, rect1, pos2, rect2) {
     top1 < bottom2;
 }
 
-function deletePlayerContainer(entities, player) {
-  var parent = entities.getComponent(player, "parent");
-  var ghosts = entities.getComponent(parent, "ghosts");
-  for (var i = 0; i < ghosts.length; i++) {
-    deletePlayer(entities, ghosts[i]);
-  }
-  entities.destroy(parent);
-}
-
-function deletePlayer(entities, player) {
-  var body = entities.getComponent(player, "body");
-  entities.destroy(body);
-
-  var bullets = entities.find("fireBullet");
-  for (var i = 0; i < bullets.length; i++) {
-    var parent = entities.getComponent(bullets[i], "parent");
-    if (parent === player) {
-      entities.destroy(bullets[i]);
-      break;
-    }
-  }
-
-  entities.destroy(player);
-}
