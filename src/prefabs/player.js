@@ -54,6 +54,8 @@ function makePlayerBody(entities, parent, color) {
   var rectangle = entities.addComponent(body, "rectangle");
   rectangle.color = color;
   rectangle.radius = 20;
+  rectangle.width = 50;
+  rectangle.height = 50;
 
   entities.setComponent(body, "parent", parent);
   return body;
