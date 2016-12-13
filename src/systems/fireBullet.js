@@ -16,16 +16,17 @@ module.exports = function(entities, sounds) {
 
       var player = entities.getComponent(ids[i], "parent");
       var ghostContainer = entities.getComponent(player, "parent");
-      // if (!ghostContainer) {
-      //   continue;
-      // }
+      if (ghostContainer === undefined) {
+        console.log("entity", ids[i], "parent", player, "doesn't exist", entities);
+        continue;
+      }
       var gamepadComponent = entities.getComponent(ghostContainer, "gamepad");
-      if (!gamepadComponent) {
+      if (gamepadComponent === undefined) {
         continue;
       }
 
       var gamepad = gamepads[gamepadComponent.index];
-      if (!gamepad) {
+      if (gamepad === undefined) {
         continue;
       }
       if (isShooting(gamepad)) {

@@ -48,12 +48,12 @@ entities.registerComponent("particleSpawner", require("./components/particleSpaw
 
 // Systems
 ecs.add(require("./systems/updatePositionFromGamepad")(entities));
-ecs.add(require("./systems/collisionDetection")(entities, sounds));
 ecs.add(require("./systems/particleSpawner")(entities));
 ecs.add(require("./systems/fireBullet")(entities, sounds));
 ecs.add(require("./systems/spawnPlayers")(sounds));
 ecs.add(require("./systems/velocity")(entities));
 ecs.add(require("./systems/wrapAround")());
+ecs.add(require("./systems/collisionDetection")(entities, sounds));
 ecs.add(require("./systems/lifetime")());
 ecs.add(require("./systems/graphicsFromRectangle")());
 ecs.add(require("./systems/graphicsFromText")());
