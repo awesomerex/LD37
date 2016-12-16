@@ -14,10 +14,17 @@ module.exports = function(sounds) {
         continue;
       }
 
+      var totalHoldTime = 1000;
+
+      entities.removeComponent(ids[i], "graphics");
+
       if (isShooting(gamepad)) {
         playerReady.time += elapsed;
 
-        if (playerReady.time > 1000) {
+        var arc = entities.getComponent(ids[i], "arc");
+        arc.endAngle = (Math.PI * 2) * (playerReady.time / totalHoldTime);
+
+        if (playerReady.time > totalHoldTime) {
           sounds.play("fire");
           player(entities, playerReady.gamepad, position.x, position.y, playerReady.color, playerReady.rotation, playerReady.name);
           entities.destroy(ids[i]);
@@ -39,6 +46,14 @@ module.exports = function(sounds) {
             }, sounds);
           }
         }
+      } else {
+        playerReady.time -= elapsed;
+        if (playerReady.time < 0) {
+          playerReady.time = 0;
+        }
+
+        var arc = entities.getComponent(ids[i], "arc");
+        arc.endAngle = (Math.PI * 2) * (playerReady.time / totalHoldTime);
       }
     }
   }
