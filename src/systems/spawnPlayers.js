@@ -8,6 +8,7 @@ module.exports = function(sounds) {
     var ids = entities.find("playerReady").slice();
     for (var i = 0; i < ids.length; i++) {
       var playerReady = entities.getComponent(ids[i], "playerReady");
+      var position = entities.getComponent(ids[i], "position");
       var gamepad = gamepads[playerReady.gamepad];
       if (!gamepad) {
         continue;
@@ -18,7 +19,7 @@ module.exports = function(sounds) {
 
         if (playerReady.time > 1000) {
           sounds.play("fire");
-          player(entities, playerReady.gamepad, playerReady.x, playerReady.y, playerReady.color, playerReady.rotation, playerReady.name);
+          player(entities, playerReady.gamepad, position.x, position.y, playerReady.color, playerReady.rotation, playerReady.name);
           entities.destroy(ids[i]);
 
           if (entities.find("ghosts").length === 1) {

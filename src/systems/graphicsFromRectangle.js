@@ -13,8 +13,8 @@ module.exports = function() {
       graphics = entities.addComponent(ids[i], "graphics");
       var g = graphics.drawable = new PIXI.Graphics();
       g.className = "rectangle";
-
       g.entity = ids[i];
+
       g.beginFill(rectangle.color, 1);
       g.drawRoundedRect(-rectangle.width / 2, -rectangle.height / 2, rectangle.width, rectangle.height, rectangle.radius || 0);
       g.endFill();
