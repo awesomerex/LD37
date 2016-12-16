@@ -34,16 +34,16 @@ sounds.loadFromManifest({
 });
 
 // Components
-entities.registerComponent("position", require("./components/position").factory, require("./components/position").reset);
-entities.registerComponent("graphics", require("./components/graphics").factory, require("./components/graphics").reset);
-entities.registerComponent("rectangle", require("./components/rectangle").factory, require("./components/rectangle").reset);
 entities.registerComponent("gamepad", require("./components/gamepad").factory, require("./components/gamepad").reset);
-entities.registerComponent("velocity", require("./components/velocity").factory, require("./components/velocity").reset);
-entities.registerComponent("lifetime", require("./components/lifetime").factory, require("./components/lifetime").reset);
 entities.registerComponent("ghosts", require("./components/ghosts").factory, require("./components/ghosts").reset);
-entities.registerComponent("text", require("./components/text").factory, require("./components/text").reset);
-entities.registerComponent("playerReady", require("./components/playerReady").factory, require("./components/playerReady").reset);
+entities.registerComponent("graphics", require("./components/graphics").factory, require("./components/graphics").reset);
+entities.registerComponent("lifetime", require("./components/lifetime").factory, require("./components/lifetime").reset);
 entities.registerComponent("particleSpawner", require("./components/particleSpawner").factory, require("./components/particleSpawner").reset);
+entities.registerComponent("playerReady", require("./components/playerReady").factory, require("./components/playerReady").reset);
+entities.registerComponent("position", require("./components/position").factory, require("./components/position").reset);
+entities.registerComponent("rectangle", require("./components/rectangle").factory, require("./components/rectangle").reset);
+entities.registerComponent("text", require("./components/text").factory, require("./components/text").reset);
+entities.registerComponent("velocity", require("./components/velocity").factory, require("./components/velocity").reset);
 
 
 // Systems
