@@ -11,5 +11,8 @@ module.exports = function makePlayerContainer(entities, gamepadIndex, x, y, colo
   playerReady.rotation = rotation;
   playerReady.name = name;
 
+  var arc = entities.addComponent(id, "arc");
+  arc.color = color;
+
   return id;
 }

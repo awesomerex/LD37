@@ -34,6 +34,7 @@ sounds.loadFromManifest({
 });
 
 // Components
+entities.registerComponent("arc", require("./components/arc").factory, require("./components/arc").reset);
 entities.registerComponent("gamepad", require("./components/gamepad").factory, require("./components/gamepad").reset);
 entities.registerComponent("ghosts", require("./components/ghosts").factory, require("./components/ghosts").reset);
 entities.registerComponent("graphics", require("./components/graphics").factory, require("./components/graphics").reset);
@@ -56,6 +57,7 @@ ecs.add(require("./systems/wrapAround")());
 ecs.add(require("./systems/collisionDetection")(entities, sounds));
 ecs.add(require("./systems/lifetime")());
 ecs.add(require("./systems/graphicsFromRectangle")());
+ecs.add(require("./systems/graphicsFromArc")());
 ecs.add(require("./systems/graphicsFromText")());
 ecs.add(require("./systems/graphicsPosition")(entities));
 ecs.add(require("./systems/setParents")(stage, entities));
