@@ -17,32 +17,29 @@ module.exports = function(sounds) {
       var totalHoldTime = 1000;
 
       entities.removeComponent(ids[i], "graphics");
+      var arc = entities.getComponent(ids[i], "arc");
+      arc.startAngle = Math.PI / -2.0;
 
       if (isShooting(gamepad)) {
         playerReady.time += elapsed;
 
-        var arc = entities.getComponent(ids[i], "arc");
-        arc.endAngle = (Math.PI * 2) * (playerReady.time / totalHoldTime);
+        arc.endAngle = arc.startAngle + (Math.PI * 2) * (playerReady.time / totalHoldTime);
 
         if (playerReady.time > totalHoldTime) {
           sounds.play("fire");
           player(entities, playerReady.gamepad, position.x, position.y, playerReady.color, playerReady.rotation, playerReady.name);
           entities.destroy(ids[i]);
+          destroyChildren(entities, ids[i]);
 
           if (entities.find("ghosts").length === 1) {
-            var ids = entities.find("text").slice();
-            for (var i = 0; i < ids.length; i++) {
-              entities.destroy(ids[i]);
-            }
+            destroyEntities(entities, entities.find("text").slice());
           }
           if (entities.find("ghosts").length === 2) {
 
             buildTimer(entities, 3, function() {
               addGamepads(entities);
-              var ids = entities.find("playerReady").slice();
-              for (var i = 0; i < ids.length; i++) {
-                entities.destroy(ids[i]);
-              }
+              destroyEntities(entities, entities.find("playerReady").slice());
+              destroyEntities(entities, entities.find("spawnLocation").slice());
             }, sounds);
           }
         }
@@ -52,10 +49,27 @@ module.exports = function(sounds) {
           playerReady.time = 0;
         }
 
-        var arc = entities.getComponent(ids[i], "arc");
-        arc.endAngle = (Math.PI * 2) * (playerReady.time / totalHoldTime);
+        arc.endAngle = arc.startAngle + (Math.PI * 2) * (playerReady.time / totalHoldTime);
       }
     }
+  }
+}
+
+function destroyChildren(entities, parentId) {
+  var ids = entities.find("parent").slice();
+  for (var i = 0; i < ids.length; i++) {
+    if (entities.getComponent(ids[i], "parent") === parentId) {
+      entities.destroy(ids[i]);
+    }
+  }
+}
+
+function destroyEntities(entities, ids) {
+  if (ids === undefined) {
+    return;
+  }
+  for (var i = 0; i < ids.length; i++) {
+    entities.destroy(ids[i]);
   }
 }
 

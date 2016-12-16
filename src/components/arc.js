@@ -12,5 +12,6 @@ module.exports = {
     arc.endAngle = 0;
     arc.radius = 10;
     arc.startAngle = 0;
+    delete arc.lineWidth;
   }
 }

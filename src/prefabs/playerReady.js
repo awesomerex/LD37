@@ -14,5 +14,15 @@ module.exports = function makePlayerContainer(entities, gamepadIndex, x, y, colo
   var arc = entities.addComponent(id, "arc");
   arc.color = color;
 
+
+  var circle = entities.create();
+  entities.setComponent(circle, "spawnLocation", true);
+  entities.setComponent(circle, "parent", id);
+  entities.addComponent(circle, "position");
+  var arc = entities.addComponent(circle, "arc");
+  arc.color = color;
+  arc.lineWidth = 2;
+  arc.endAngle = Math.PI * 2;
+
   return id;
 }

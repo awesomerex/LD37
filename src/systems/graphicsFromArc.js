@@ -15,10 +15,28 @@ module.exports = function() {
       g.className = "arc";
       g.entity = ids[i];
 
-      g.moveTo(0, 0);
-      g.beginFill(arc.color, 1);
-      g.arc(0, 0, arc.radius, arc.startAngle, arc.endAngle);
-      g.endFill();
+      if (arc.lineWidth !== undefined) {
+        drawLineArc(g, arc)
+      } else {
+        drawFilledArc(g, arc);
+      }
     }
   }
+}
+
+function drawLineArc(g, arc) {
+  var sx = Math.cos(arc.startAngle) * arc.radius;
+  var sy = Math.sin(arc.startAngle) * arc.radius;
+  g.moveTo(sx, sy);
+
+  g.lineStyle(arc.lineWidth, arc.color);
+  g.arc(0, 0, arc.radius, arc.startAngle, arc.endAngle);
+}
+
+function drawFilledArc(g, arc) {
+  g.moveTo(0, 0);
+
+  g.beginFill(arc.color, 1);
+  g.arc(0, 0, arc.radius, arc.startAngle, arc.endAngle);
+  g.endFill();
 }
