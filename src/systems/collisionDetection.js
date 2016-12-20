@@ -4,6 +4,35 @@ var text = require("../prefabs/text");
 
 module.exports = function(entities, sounds) {
 
+  function collideWithActivators(bullet, bPos, bRect) {
+    var activators = entities.find("activators");
+    for (var x = 0; x < activators.length; x++) {
+      var graphics = entities.getComponent(activators[x], "graphics");
+      var aPos = {
+        x: graphics.drawable.worldTransform.tx,
+        y: graphics.drawable.worldTransform.ty
+      };
+      var aRect = entities.getComponent(activators[x], "rectangle");
+
+      if (collides(bPos, bRect, aPos, aRect)) {
+        sounds.play("charge");
+        entities.setComponent(bullet, "active", true);
+
+        var player = entities.getComponent(bullet, "owner");
+        var parent = entities.getComponent(player, "parent");
+        var color = entities.getComponent(parent, "color");
+        bRect.color = color;
+
+        entities.removeComponent(bullet, "graphics");
+
+        var spawner = entities.addComponent(bullet, "particleSpawner");
+        spawner.vx = 0;
+        spawner.vy = 0;
+        spawner.number = 1;
+      }
+    }
+  }
+
   entities.registerSearch("movingBullets", ["bullet", "velocity"]);
   return function collisionDetection(entities){
     var bullets = entities.find("movingBullets");
@@ -50,32 +79,7 @@ module.exports = function(entities, sounds) {
           }
         }
       } else {
-        var activators = entities.find("activators");
-        for (var x = 0; x < activators.length; x++) {
-          var graphics = entities.getComponent(activators[x], "graphics");
-          var aPos = {
-            x: graphics.drawable.worldTransform.tx,
-            y: graphics.drawable.worldTransform.ty
-          };
-          var aRect = entities.getComponent(activators[x], "rectangle");
-
-          if (collides(bPos, bRect, aPos, aRect)) {
-            sounds.play("charge");
-            entities.setComponent(bullets[i], "active", true);
-
-            var player = entities.getComponent(bullets[i], "owner");
-            var parent = entities.getComponent(player, "parent");
-            var color = entities.getComponent(parent, "color");
-            bRect.color = color;
-
-            entities.removeComponent(bullets[i], "graphics");
-
-            var spawner = entities.addComponent(bullets[i], "particleSpawner");
-            spawner.vx = 0;
-            spawner.vy = 0;
-            spawner.number = 1;
-          } 
-        }
+        collideWithActivators(bullets[i], bPos, bRect);
       }
     }
   }
