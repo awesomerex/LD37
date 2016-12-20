@@ -1,4 +1,4 @@
-module.exports = function makeParticle(x, y, vx, vy, image){
+module.exports = function makeParticle(entities, x, y, vx, vy, image){
 	var spriteId = entities.create();
 	var graphics = entities.addComponent(spriteId, "graphics");
 

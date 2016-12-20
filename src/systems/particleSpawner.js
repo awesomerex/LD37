@@ -12,7 +12,7 @@ module.exports = function () {
 				var position = entities.getComponent(ids[i], "position");
 				var image = "img/red-pixel.png";
 				for(var x = 0; x < 1; x++){
-					makeParticle(position.x, position.y, ps.vx, ps.vy, image);
+					makeParticle(entities, position.x, position.y, ps.vx, ps.vy, image);
 				}
 			}
 		}

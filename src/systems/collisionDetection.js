@@ -26,6 +26,10 @@ module.exports = function(entities, sounds) {
           var pRect = entities.getComponent(body, "rectangle");
 
           if (collides(bPos, bRect, pPos, pRect)) {
+
+            createParticleSpawner(entities, pPos.x, pPos.y);
+            console.log(pPos);
+
             sounds.play("die");
             deletePlayer(entities, players[x]);
 
@@ -99,3 +103,17 @@ function collides(pos1, rect1, pos2, rect2) {
     top1 < bottom2;
 }
 
+function createParticleSpawner(entities, x, y){
+  console.log(entities);
+  var deathParticleSpawner = entities.create();
+  var deathParticleSpawnerPos = entities.addComponent(deathParticleSpawner, "position");
+  deathParticleSpawnerPos.x = x;
+  deathParticleSpawnerPos.y = y;
+  var deathParticleSpawnerSpawner = entities.addComponent(deathParticleSpawner, "particleSpawner");
+  deathParticleSpawnerSpawner.vx = 0;
+  deathParticleSpawnerSpawner.vy = (Math.random() * 2) - 1;
+  deathParticleSpawnerSpawner.number = 1;
+
+  var deathParticleSpawnerLifetime = entities.addComponent(deathParticleSpawner, "lifetime");
+  deathParticleSpawnerLifetime.lifetime = 50;
+}

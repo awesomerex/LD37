@@ -4,7 +4,7 @@ var PIXI = require("pixi.js");
 
 var ecs = new EntityComponentSystem();
 var entities = new EntityPool();
-window.entities = entities;
+//window.entities = entities;
 
 var renderer = PIXI.autoDetectRenderer(800, 600, {
   backgroundColor: 0xc3c5d9,
