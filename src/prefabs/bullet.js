@@ -1,8 +1,7 @@
-module.exports = function makeBullet(entities, parent, color) {
+module.exports = function makeBullet(entities, parent) {
 
   var id = entities.create();
   entities.setComponent(id, "bullet", true);
-  entities.setComponent(id, "color", color);
   entities.setComponent(id, "parent", parent);
 
   var position = entities.addComponent(id, "position");

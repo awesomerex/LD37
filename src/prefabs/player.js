@@ -31,7 +31,6 @@ module.exports = function makePlayerContainer(entities, gamepadIndex, x, y, colo
 function makePlayer(entities, parent, x, y, color, rotation) {
   var player = entities.create();
   entities.setComponent(player, "player", true);
-  entities.setComponent(player, "color", color);
   entities.setComponent(player, "parent", parent);
 
   var graphics = entities.addComponent(player, "graphics");
@@ -45,7 +44,7 @@ function makePlayer(entities, parent, x, y, color, rotation) {
   position.rotation = rotation;
 
   entities.setComponent(player, "body", makePlayerBody(entities, player, color));
-  bullet(entities, player, color);
+  bullet(entities, player);
 
   return player;
 }

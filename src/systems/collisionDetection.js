@@ -62,7 +62,12 @@ module.exports = function(entities, sounds) {
           if (collides(bPos, bRect, aPos, aRect)) {
             sounds.play("charge");
             entities.setComponent(bullets[i], "active", true);
-            bRect.color = entities.getComponent(bullets[i], "color");
+
+            var player = entities.getComponent(bullets[i], "owner");
+            var parent = entities.getComponent(player, "parent");
+            var color = entities.getComponent(parent, "color");
+            bRect.color = color;
+
             entities.removeComponent(bullets[i], "graphics");
 
             var spawner = entities.addComponent(bullets[i], "particleSpawner");
