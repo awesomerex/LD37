@@ -62,7 +62,7 @@ module.exports = function(entities, sounds) {
           if (collides(bPos, bRect, aPos, aRect)) {
             sounds.play("charge");
             entities.setComponent(bullets[i], "active", true);
-            bRect.color = 0xBA3C3D;
+            bRect.color = entities.getComponent(bullets[i], "color");
             entities.removeComponent(bullets[i], "graphics");
 
             var spawner = entities.addComponent(bullets[i], "particleSpawner");
