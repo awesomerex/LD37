@@ -45,6 +45,15 @@ module.exports = function(entities, sounds) {
       var pRect = entities.getComponent(body, "rectangle");
 
       if (collides(bPos, bRect, pPos, pRect)) {
+
+        // FIXME: kill stats here
+        var player = entities.getComponent(bullet, "owner");
+        var parent = entities.getComponent(player, "parent");
+        var name = entities.getComponent(parent, "name");
+        parent = entities.getComponent(players[x], "parent");
+        var victimName = entities.getComponent(parent, "name");
+        console.log(name, "killed", victimName);
+
         sounds.play("die");
         deletePlayer(entities, players[x]);
 
