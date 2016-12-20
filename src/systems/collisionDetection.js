@@ -33,6 +33,43 @@ module.exports = function(entities, sounds) {
     }
   }
 
+  function collideWithPlayers(bullet, bPos, bRect) {
+    var players = entities.find("player");
+    for (var x = 0; x < players.length; x++) {
+      var graphics = entities.getComponent(players[x], "graphics");
+      var pPos = {
+        x: graphics.drawable.worldTransform.tx,
+        y: graphics.drawable.worldTransform.ty
+      };
+      var body = entities.getComponent(players[x], "body");
+      var pRect = entities.getComponent(body, "rectangle");
+
+      if (collides(bPos, bRect, pPos, pRect)) {
+        sounds.play("die");
+        deletePlayer(entities, players[x]);
+
+        var playersLeft = entities.find("name");
+        if (playersLeft.length === 1) {
+          var winnerName = entities.getComponent(playersLeft[0], "name");
+          var winnerColor = entities.getComponent(playersLeft[0], "color");
+
+          var ids = entities.find("bullet")
+          while (ids.length > 0) {
+            entities.destroy(ids[0]);
+          }
+          // var ids = Object.keys(entities.entities);
+          // for (var i = 0; i < ids.length; i++) {
+          //   entities.destroy(ids[i]);
+          // }
+
+          var t = text(entities, winnerName + " wins!", 400, 300, 100, winnerColor);
+          spawnPlayers(entities);
+          return;
+        }
+      }
+    }
+  }
+
   entities.registerSearch("movingBullets", ["bullet", "velocity"]);
   return function collisionDetection(entities){
     var bullets = entities.find("movingBullets");
@@ -42,42 +79,7 @@ module.exports = function(entities, sounds) {
 
       var active = entities.getComponent(bullets[i], "active");
       if (active) {
-
-        //loop through players looking for collisions.
-        var players = entities.find("player");
-        for (var x = 0; x < players.length; x++) {
-          var graphics = entities.getComponent(players[x], "graphics");
-          var pPos = {
-            x: graphics.drawable.worldTransform.tx,
-            y: graphics.drawable.worldTransform.ty
-          };
-          var body = entities.getComponent(players[x], "body");
-          var pRect = entities.getComponent(body, "rectangle");
-
-          if (collides(bPos, bRect, pPos, pRect)) {
-            sounds.play("die");
-            deletePlayer(entities, players[x]);
-
-            var playersLeft = entities.find("name");
-            if (playersLeft.length === 1) {
-              var winnerName = entities.getComponent(playersLeft[0], "name");
-              var winnerColor = entities.getComponent(playersLeft[0], "color");
-
-              var ids = entities.find("bullet")
-              while (ids.length > 0) {
-                entities.destroy(ids[0]);
-              }
-              // var ids = Object.keys(entities.entities);
-              // for (var i = 0; i < ids.length; i++) {
-              //   entities.destroy(ids[i]);
-              // }
-
-              var t = text(entities, winnerName + " wins!", 400, 300, 100, winnerColor);
-              spawnPlayers(entities);
-              return;
-            }
-          }
-        }
+        collideWithPlayers(bullets[i], bPos, bRect);
       } else {
         collideWithActivators(bullets[i], bPos, bRect);
       }
