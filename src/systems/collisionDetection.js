@@ -4,81 +4,6 @@ var text = require("../prefabs/text");
 
 module.exports = function(entities, sounds) {
 
-  function collideWithActivators(bullet, bPos, bRect) {
-    var activators = entities.find("activators");
-    for (var x = 0; x < activators.length; x++) {
-      var graphics = entities.getComponent(activators[x], "graphics");
-      var aPos = {
-        x: graphics.drawable.worldTransform.tx,
-        y: graphics.drawable.worldTransform.ty
-      };
-      var aRect = entities.getComponent(activators[x], "rectangle");
-
-      if (collides(bPos, bRect, aPos, aRect)) {
-        sounds.play("charge");
-        entities.setComponent(bullet, "active", true);
-
-        var player = entities.getComponent(bullet, "owner");
-        var parent = entities.getComponent(player, "parent");
-        var color = entities.getComponent(parent, "color");
-        bRect.color = color;
-
-        entities.removeComponent(bullet, "graphics");
-
-        var spawner = entities.addComponent(bullet, "particleSpawner");
-        spawner.vx = 0;
-        spawner.vy = 0;
-        spawner.number = 1;
-      }
-    }
-  }
-
-  function collideWithPlayers(bullet, bPos, bRect) {
-    var players = entities.find("player");
-    for (var x = 0; x < players.length; x++) {
-      var graphics = entities.getComponent(players[x], "graphics");
-      var pPos = {
-        x: graphics.drawable.worldTransform.tx,
-        y: graphics.drawable.worldTransform.ty
-      };
-      var body = entities.getComponent(players[x], "body");
-      var pRect = entities.getComponent(body, "rectangle");
-
-      if (collides(bPos, bRect, pPos, pRect)) {
-
-        // FIXME: kill stats here
-        var player = entities.getComponent(bullet, "owner");
-        var parent = entities.getComponent(player, "parent");
-        var name = entities.getComponent(parent, "name");
-        parent = entities.getComponent(players[x], "parent");
-        var victimName = entities.getComponent(parent, "name");
-        console.log(name, "killed", victimName);
-        createParticleSpawner(entities, pPos.x, pPos.y);
-        sounds.play("die");
-        deletePlayer(entities, players[x]);
-
-        var playersLeft = entities.find("name");
-        if (playersLeft.length === 1) {
-          var winnerName = entities.getComponent(playersLeft[0], "name");
-          var winnerColor = entities.getComponent(playersLeft[0], "color");
-
-          var ids = entities.find("bullet")
-          while (ids.length > 0) {
-            entities.destroy(ids[0]);
-          }
-          // var ids = Object.keys(entities.entities);
-          // for (var i = 0; i < ids.length; i++) {
-          //   entities.destroy(ids[i]);
-          // }
-
-          var t = text(entities, winnerName + " wins!", 400, 300, 100, winnerColor);
-          spawnPlayers(entities);
-          return;
-        }
-      }
-    }
-  }
-
   entities.registerSearch("movingBullets", ["bullet", "velocity"]);
   return function collisionDetection(entities){
     var bullets = entities.find("movingBullets");
@@ -88,9 +13,68 @@ module.exports = function(entities, sounds) {
 
       var active = entities.getComponent(bullets[i], "active");
       if (active) {
-        collideWithPlayers(bullets[i], bPos, bRect);
+
+        //loop through players looking for collisions.
+        var players = entities.find("player");
+        for (var x = 0; x < players.length; x++) {
+          var graphics = entities.getComponent(players[x], "graphics");
+          var pPos = {
+            x: graphics.drawable.worldTransform.tx,
+            y: graphics.drawable.worldTransform.ty
+          };
+          var body = entities.getComponent(players[x], "body");
+          var pRect = entities.getComponent(body, "rectangle");
+
+          if (collides(bPos, bRect, pPos, pRect)) {
+
+            createParticleSpawner(entities, pPos.x, pPos.y);
+            console.log(pPos);
+
+            sounds.play("die");
+            deletePlayer(entities, players[x]);
+
+            var playersLeft = entities.find("name");
+            if (playersLeft.length === 1) {
+              var winnerName = entities.getComponent(playersLeft[0], "name");
+              var winnerColor = entities.getComponent(playersLeft[0], "color");
+
+              var ids = entities.find("bullet")
+              while (ids.length > 0) {
+                entities.destroy(ids[0]);
+              }
+              // var ids = Object.keys(entities.entities);
+              // for (var i = 0; i < ids.length; i++) {
+              //   entities.destroy(ids[i]);
+              // }
+
+              var t = text(entities, winnerName + " wins!", 400, 300, 100, winnerColor);
+              spawnPlayers(entities);
+              return;
+            }
+          }
+        }
       } else {
-        collideWithActivators(bullets[i], bPos, bRect);
+        var activators = entities.find("activators");
+        for (var x = 0; x < activators.length; x++) {
+          var graphics = entities.getComponent(activators[x], "graphics");
+          var aPos = {
+            x: graphics.drawable.worldTransform.tx,
+            y: graphics.drawable.worldTransform.ty
+          };
+          var aRect = entities.getComponent(activators[x], "rectangle");
+
+          if (collides(bPos, bRect, aPos, aRect)) {
+            sounds.play("charge");
+            entities.setComponent(bullets[i], "active", true);
+            bRect.color = 0xBA3C3D;
+            entities.removeComponent(bullets[i], "graphics");
+
+            var spawner = entities.addComponent(bullets[i], "particleSpawner");
+            spawner.vx = 0;
+            spawner.vy = 0;
+            spawner.number = 1;
+          } 
+        }
       }
     }
   }
